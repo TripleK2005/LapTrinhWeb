@@ -1,0 +1,122 @@
+﻿@model Lab06Validation.Models.Student
+@{
+    ViewData["Title"] = "Thêm sinh viên mới";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post">
+    <!-- Name -->
+    <div class="form-group row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group row">
+        <label asp-for="Password" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Password" class="form-control" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Branch -->
+    <div class="form-group row">
+        <label asp-for="Branch" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="Branch" class="form-control">
+                <option value="">-- Chọn ngành --</option>
+                <option value="IT">IT</option>
+                <option value="BE">BE</option>
+                <option value="EE">EE</option>
+                <option value="CE">CE</option>
+            </select>
+            <span asp-validation-for="Branch" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Gender -->
+    <div class="form-group row">
+        <label asp-for="Gender" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input type="radio" asp-for="Gender" value="Nam" /> Nam
+            <input type="radio" asp-for="Gender" value="Nữ" /> Nữ
+            <input type="radio" asp-for="Gender" value="Khác" /> Khác
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- IsRegular -->
+    <div class="form-group row">
+        <label asp-for="IsRegular" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="IsRegular" />
+            <span asp-validation-for="IsRegular" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label asp-for="DateOfBirth" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <!-- Ngay: ép value về yyyy-MM-dd để chắc chắn -->
+            <input asp-for="DateOfBirth" class="form-control"
+                   type="date"
+                   value="@(Model?.DateOfBirth.HasValue == true ? Model.DateOfBirth.Value.ToString("yyyy-MM-dd") : String.Empty)" />
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Address" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <textarea asp-for="Address" class="form-control"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Score" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Score" class="form-control" step="0.1" />
+            <span asp-validation-for="Score" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Ghi đè jQuery Validate date method để chấp nhận ISO yyyy-mm-dd (input[type=date])
+        if ($.validator && $.validator.methods) {
+            $.validator.methods.date = function (value, element) {
+                if (this.optional(element)) return true;
+                // accept yyyy-mm-dd
+                if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return true;
+                // fallback: thử parse dd/mm/yyyy
+                var parts = value.split('/');
+                if (parts.length === 3) {
+                    var d = parseInt(parts[0], 10), m = parseInt(parts[1], 10), y = parseInt(parts[2], 10);
+                    var dt = new Date(y, m - 1, d);
+                    return dt && (dt.getFullYear() === y) && (dt.getMonth() === m - 1) && (dt.getDate() === d);
+                }
+                return false;
+            };
+        }
+    </script>
+}
