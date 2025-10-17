@@ -1,0 +1,79 @@
+﻿@model Lab09_v2.Models.nthSanPham
+
+@{
+    ViewData["Title"] = "Chi tiết Sản phẩm";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="mb-0">@ViewData["Title"]: @Model.nthTenSanPham</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        @if (!string.IsNullOrEmpty(Model.nthHinhAnh))
+                        {
+                            <img src="~/images/@Model.nthHinhAnh" class="img-fluid rounded shadow-sm" alt="@Model.nthTenSanPham" />
+                        }
+                        else
+                        {
+                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px; border-radius: 0.25rem;">
+                                <span>Không có hình ảnh</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <dl class="row">
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.nthMaSanPham)
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.nthMaSanPham)
+                            </dd>
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.nthTenSanPham)
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.nthTenSanPham)
+                            </dd>
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.LoaiSanPham)
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.LoaiSanPham.nthTenLoai)
+                            </dd>
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.nthSoLuong)
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.nthSoLuong)
+                            </dd>
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.nthDonGia)
+                            </dt>
+                            <dd class="col-sm-7">
+                                <strong class="text-danger">@Model.nthDonGia.ToString("N0") đ</strong>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-light">
+                <div class="d-flex justify-content-between">
+                    <a asp-action="nthIndex" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                    </a>
+                    <a asp-action="nthEdit" asp-route-id="@Model?.nthId" class="btn btn-primary">
+                        <i class="fas fa-pencil-alt"></i> Chỉnh sửa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Lab09_v2.Models.nthSanPham>
+
+@{
+    ViewData["Title"] = "Danh sách Sản phẩm";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+            <a asp-action="nthCreate" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Tạo mới Sản phẩm
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover table-bordered table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().nthHinhAnh)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().nthMaSanPham)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().nthTenSanPham)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().LoaiSanPham)
+                    </th>
+                    <th class="text-end">
+                        @Html.DisplayNameFor(model => model.First().nthSoLuong)
+                    </th>
+                    <th class="text-end">
+                        @Html.DisplayNameFor(model => model.First().nthDonGia)
+                    </th>
+                    <th class="text-center" style="width: 150px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @if (!string.IsNullOrEmpty(item.nthHinhAnh))
+                            {
+                                <img src="~/images/@item.nthHinhAnh" class="img-thumbnail" style="width: 75px; height: 75px; object-fit: cover;" alt="@item.nthTenSanPham" />
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nthMaSanPham)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nthTenSanPham)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LoaiSanPham.nthTenLoai)
+                        </td>
+                        <td class="text-end">
+                            @Html.DisplayFor(modelItem => item.nthSoLuong)
+                        </td>
+                        <td class="text-end">
+                            @item.nthDonGia.ToString("N0") đ
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a asp-action="nthEdit" asp-route-id="@item.nthId" class="btn btn-outline-primary" title="Sửa">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a asp-action="nthDetails" asp-route-id="@item.nthId" class="btn btn-outline-info" title="Chi tiết">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                <a asp-action="nthDelete" asp-route-id="@item.nthId" class="btn btn-outline-danger" title="Xóa">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

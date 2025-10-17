@@ -1,0 +1,73 @@
+﻿@model Lab09_v2.Models.nthSanPham
+
+@{
+    ViewData["Title"] = "Xác nhận xóa Sản phẩm";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0">Xóa Sản phẩm: @Model.nthTenSanPham</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title text-danger">Bạn có chắc chắn muốn xóa sản phẩm này không?</h4>
+                <p class="card-text">Hành động này không thể được hoàn tác. Vui lòng xem lại thông tin dưới đây trước khi xác nhận.</p>
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        @if (!string.IsNullOrEmpty(Model.nthHinhAnh))
+                        {
+                            <img src="~/images/@Model.nthHinhAnh" class="img-fluid rounded shadow-sm" alt="@Model.nthTenSanPham" />
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <dl class="row">
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.nthMaSanPham)
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.nthMaSanPham)
+                            </dd>
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.nthTenSanPham)
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.nthTenSanPham)
+                            </dd>
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.LoaiSanPham)
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.LoaiSanPham.nthTenLoai)
+                            </dd>
+
+                            <dt class="col-sm-5">
+                                @Html.DisplayNameFor(model => model.nthDonGia)
+                            </dt>
+                            <dd class="col-sm-7">
+                                <strong class="text-danger">@Model.nthDonGia.ToString("N0") đ</strong>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-light">
+                <form asp-action="nthDelete">
+                    <input type="hidden" asp-for="nthId" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="nthIndex" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Hủy
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i> Xác nhận Xóa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

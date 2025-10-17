@@ -1,0 +1,56 @@
+﻿@model Lab09_v2.Models.nthLoaiSanPham
+
+@{
+    ViewData["Title"] = "Tạo mới Loại sản phẩm";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Tạo mới Loại sản phẩm</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="nthCreate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="nthMaLoai" class="form-label"></label>
+                        <input asp-for="nthMaLoai" class="form-control" placeholder="Ví dụ: AO" />
+                        <span asp-validation-for="nthMaLoai" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="nthTenLoai" class="form-label"></label>
+                        <input asp-for="nthTenLoai" class="form-control" placeholder="Ví dụ: Áo Thun" />
+                        <span asp-validation-for="nthTenLoai" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="nthTrangThai" />
+                        <label class="form-check-label" asp-for="nthTrangThai">
+                            @Html.DisplayNameFor(model => model.nthTrangThai)
+                        </label>
+                    </div>
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="nthIndex" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Tạo mới
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

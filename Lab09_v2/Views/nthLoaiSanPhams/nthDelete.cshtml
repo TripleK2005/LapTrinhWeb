@@ -1,0 +1,56 @@
+﻿@model Lab09_v2.Models.nthLoaiSanPham
+
+@{
+    ViewData["Title"] = "Xác nhận xóa";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0">Xóa Loại sản phẩm</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title text-danger">Bạn có chắc chắn muốn xóa mục này không?</h4>
+                <p class="card-text">Hành động này không thể được hoàn tác. Vui lòng xem lại thông tin dưới đây trước khi xác nhận.</p>
+                <hr />
+
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.nthMaLoai)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.nthMaLoai)
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.nthTenLoai)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.nthTenLoai)
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.nthTrangThai)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.nthTrangThai)
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-light">
+                <form asp-action="nthDelete">
+                    <input type="hidden" asp-for="nthId" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="nthIndex" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i> Xác nhận Xóa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
