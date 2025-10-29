@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome TipleK</h1>
+    <div>
+        <label for="txtFrom">From</label>
+        <input type="text" name="txtFrom" id="txtFrom" value="Nguyễn Tường Huy"/>
+    </div>   
+    
+    <input type="button" name="click" value=" >> " />
+    <div>
+        <label for="txtTo">To</label>
+        <input type="text" name="txtTo" id="txtTo" value="TripleK" />
+    </div>
+
+    
+</div>
+<div class="text-color-change">
+    <h3>Chọn màu chữ</h3>
+    <div class="btn">
+        <button data-value="red">Đỏ</button>
+        <button data-value="green">Xanh</button>
+        <button data-value="yellow">Vàng</button>
+        <button data-value="purple">Tím</button>
+        <button data-value="pink">Hồng</button>
+    </div>
+    <p>Hehehehehehehehehehehehehehhhhhhhhhhhhhhhhhhhhhhhhhhehehheeheh</p>
+
+</div>
+
+<div>
+    <button class="btn btn-primary btn-load">Load data student</button>
+    <div id="list">
+        <ul>
+            <li>
+
+            </li>
+        </ul>
+    </div>
+</div>
+@section NguyenTuongHuyScripts {
+    <script>
+        // $(document).ready(function(){
+        //     alert("Hello from Nguyễn Tường Huy");
+        //     console.log("Hello from Nguyễn Tường Huy");
+        // });
+        $(document).ready(function () {
+            $("input[name='txtFrom']").focus(function () {
+                $(this).css("background-color", "yellow");
+            });
+            $("input[name='txtFrom']").blur(function () {
+                $(this).css("background-color", "white");
+            });
+            $('input[type="button"]').click(function () {
+                console.log("Button clicked...");
+                $(this).css("background-color", "green");
+            });
+            $("input[name='click']").click(function () {
+                var fromValue = $("#txtFrom").val();
+                $("#txtTo").val(fromValue);
+            });
+            $('input[type="text]').keyup(function () {
+                let valFrom = $(this).val();
+                $(this).parent().siblings('div').children('input[type="text"]').val(valFrom);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.btn button').each(function(){
+                let valColor = $(this).attr('data-value')
+                $(this).css(
+                    {
+                        'color': valColor,
+                        'width' : '10rem',
+                        'margin': '5px',
+                        'padding': '10px',
+                        'border': 'none',
+                        'border-radius': '5px',
+                        'cursor': 'pointer',
+                    }
+                ).click(function (){
+                    $('p').css('color',valColor);
+                });
+            });
+        });
+    </script>
+
+    <script>
+               $(document).ready(function () {
+            $('#list > ul').html('');
+
+            $('.btn-load').click(function () {
+                $.ajax({
+                    url: '/Student/GetAllStudents',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#list > ul').html(''); // Xóa danh sách cũ trước khi thêm mới
+                        $.each(data, function (index, student) {
+                            let li = `<li>${student.id} - ${student.name} - ${student.age} - ${student.address}</li>`;
+                            $('#list > ul').append(li);
+                        });
+                    },
+                    error: function (err) {
+                        console.log('Error fetching student data:', err);
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+
