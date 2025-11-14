@@ -24,7 +24,7 @@ namespace Day_12_lab1.Models
         [Required(ErrorMessage = "Bạn chưa nhập địa chỉ")]
         public string? Address { get; set; }
         [Required(ErrorMessage = "Bạn chưa nhập năm sinh")]
-        [Range(typeof(DateTime), "1/1/1950", "12/31/2025", ErrorMessage = "Năm sinh phải từ 1/1/1950 đến 31/12/2025")]
+        [Range(typeof(DateTime), "1/1/1950", "31/12/2025", ErrorMessage = "Năm sinh phải từ 1/1/1950 đến 31/12/2025")]
         [DataType(DataType.Date, ErrorMessage = "Nhập năm sinh không đúng")]
         public DateTime? DateOfBorth { get; set; }
         [Required(ErrorMessage = "Bạn chưa nhập điểm")]
