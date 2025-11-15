@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Learner>
+
+<div class="ms-2 mx-2">
+    <h1>Learner List</h1>
+    @await Component.InvokeAsync("Major")
+    <div id="content">
+        @await Html.PartialAsync("_LearnerTable", Model)
+    </div>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </p>
+</div>
+
+@section Scripts {
+    <script>
+        $("li.nav-item").click(function(e) {
+            var id = $(this).attr("id");
+            $.ajax({
+                url: "@Url.Action("Index", "Learners")",
+                data: { mid: id },
+                success: function (response) {
+                    $("div#content").html(response);
+                }
+            });
+        });
+    </script>
+}                           
