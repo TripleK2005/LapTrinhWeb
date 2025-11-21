@@ -19,14 +19,20 @@ namespace Day_12_lab1.Controllers
         }
 
         // GET: Learners
+        private int pageSize = 1;
         public async Task<IActionResult> Index(int? mid)
         {
             IQueryable<Learner> learnersQuery = _context.Learners.Include(l => l.Major);
 
             if (mid != null)
             {
-                learnersQuery = learnersQuery.Where(l => l.MajorID == mid);
+                learnersQuery = (IQueryable<Learner>)_context.Learners
+                    .Where(l => l.MajorID == mid)
+                    .Include(m => m.Major);
             }
+
+            int pageNum = (int)Math.Ceiling(learnersQuery.Count() / (float)pageSize);
+            ViewBag.pageNum = pageNum;
             var learners = await learnersQuery.ToListAsync();
 
             // gọi AJAX
@@ -36,6 +42,27 @@ namespace Day_12_lab1.Controllers
             }
 
             return View(learners);
+        }
+        public async Task<IActionResult> LearnerFilter(int? mid, string? keyword, int? pageIndex)
+        {
+            var learners = (IQueryable<Learner>)_context.Learners;
+
+            int page = (int)(pageIndex == null || pageIndex <= 0 ? 1 : pageIndex);
+            if (mid != null)
+            {
+                learners = learners.Where(l => l.MajorID == mid);
+                ViewBag.mid = mid;
+            }
+
+            if (keyword != null)
+            {
+                learners = learners.Where(l => l.FirstMidName.ToLower().Contains(keyword.ToLower()));
+                ViewBag.keyword = keyword;
+            }
+            int pageNum = (int)Math.Ceiling(learners.Count() / (float)pageSize);
+            ViewBag.pageNum = pageNum;
+            var result = learners.Skip(pageSize * (page - 1)).Take(pageSize).Include(m => m.Major);
+            return PartialView("_LearnerTable", result);
         }
 
         // GET: Learners/Details/5

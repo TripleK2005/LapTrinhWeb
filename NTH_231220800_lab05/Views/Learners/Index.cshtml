@@ -3,6 +3,14 @@
 <div class="ms-2 mx-2">
     <h1>Learner List</h1>
     @await Component.InvokeAsync("Major")
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Search learner" />
+            <button id="btnSearch" class="btn btn-primary" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
     <div id="content">
         @await Html.PartialAsync("_LearnerTable", Model)
     </div>
@@ -13,15 +21,40 @@
 
 @section Scripts {
     <script>
-        $("li.nav-item").click(function(e) {
-            var id = $(this).attr("id");
+        $('body').on("click", "li.page-item", function(e){
+            var page = $(this).attr("page");
+            var mid = $(this).attr("mid");
+            var keyword = $(this).attr("keyword");
+            var data = {mid: mid, keyword: keyword, pageIndex: page};
             $.ajax({
-                url: "@Url.Action("Index", "Learners")",
-                data: { mid: id },
+                url: "LearnerFilter",
+                data: data,
                 success: function (response) {
                     $("div#content").html(response);
                 }
             });
         });
+        $(".nav li").click(function(e){
+            var id = $(this).attr("id");
+            var data = {mid: id};
+            $.ajax({
+                url: "LearnerFilter",
+                data: data,
+                success: function(res){
+                    $("div#content").html(res);
+                }
+            })
+        });
+        $("button#btnSearch").click(function(e){
+            var keyword = $("#keyword").val();
+            var data = {keyword: keyword};
+            $.ajax({
+                url: "LearnerFilter",
+                data: data,
+                success: function(res){
+                    $("div#content").html(res);
+                }
+            })
+        })
     </script>
-}                           
+}

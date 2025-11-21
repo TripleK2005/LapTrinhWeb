@@ -13,7 +13,7 @@ namespace Day_12_lab1.ViewComponents
             {
                 new MenuItem() {Id=1, Name="List Student", Link="/Admin/Student/list" },
                 new MenuItem() {Id=2, Name="Add Student", Link="/Admin/Student/add" },
-                new MenuItem() {Id=3, Name="List Leader", Link="/Learners/Index" },
+                new MenuItem() {Id=3, Name="List Learners", Link="/Learners/Index" },
                 new MenuItem() {Id=4, Name="Add Student", Link="/Learners/Create" },
 
             };
